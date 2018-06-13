@@ -41,6 +41,7 @@ HappyBirthday.prototype = {
     save: function(fromEmail, toEmail, toName, content, sendTime) {
         var card = new Card();
         var from = Blockchain.transaction.from;
+        card.id = this.mapSize;
         card.fromAddress = from;
         card.fromEmail = fromEmail;
         card.toEmail = toEmail;

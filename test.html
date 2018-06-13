@@ -25,7 +25,7 @@
     <script src="js/nebulas.js"></script>
     <script>
 
-        var dappAddress = "n1kET5z7AvJndkhnWSDgfVRERgrMaW9e7np"; //testnet
+        var dappAddress = "n1q6hRiw4YiHyMBP8JC3TRQGKiEn95T6kPU"; //testnet
         // var dappAddress = "n1zL1KcxXaHw5i67nh5NbiizmJaovkgMCqz"; //main net
 
         var nebulas = require("nebulas"),
@@ -55,7 +55,12 @@
             var to = dappAddress;
             var value = "0";
             var callFunction = "save";
-            var callArgs = JSON.stringify([$("#fromEmal").val(), $("#toEmail").val(), $("#toName").val(), $("#content").val(), $("#sendTime").val()]);
+            var fromEmail = $("#fromEmail").val();
+            var toEmail = $("#toEmail").val();
+            var toName = $("#toName").val();
+            var content = $("#content").val();
+            var sendTime = $("#sendTime").val();
+            var callArgs = JSON.stringify([fromEmail, toEmail, toName, content, sendTime]);
             
             serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
                 listener: cbPush        //设置listener, 处理交易返回信息
