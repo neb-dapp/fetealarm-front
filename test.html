@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <input type="text" id="fromEmail" placeholder="发送人邮箱">
+        <input type="text" id="toEmail" placeholder="接收人邮箱">
+        <input type="text" id="toName" placeholder="接收人称呼">
+        <textarea type="text" id="content" placeholder="内容"></textarea>
+        <input type="text" class="form_datatime" id="sendTime" placeholder="发送日期">
+        <button type="button" id="save">save</button>
+        <button type="button" id="getAll">getall</button>
+    </div>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.min.js"></script>
+    <script src="js/nebPay.js"></script>
+    <script src="js/nebulas.js"></script>
+    <script>
+
+        var dappAddress = "n1kET5z7AvJndkhnWSDgfVRERgrMaW9e7np"; //testnet
+        // var dappAddress = "n1zL1KcxXaHw5i67nh5NbiizmJaovkgMCqz"; //main net
+
+        var nebulas = require("nebulas"),
+            Account = nebulas.Account,
+            neb = new nebulas.Neb();
+        neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+        // neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"));
+
+        var NebPay = require("nebpay");     //https://github.com/nebulasio/nebPay
+        var nebPay = new NebPay();
+        var serialNumber;
+        var intervalQuery;
+
+        $("#sendTime").datetimepicker({
+            format: 'yyyy-mm-dd hh:ii',
+        });
+
+        $("#save").click(function(){
+            save();
+        });
+
+        $("#getAll").click(function() {
+            getAll();
+        });
+        
+        function save() {
+            var to = dappAddress;
+            var value = "0";
+            var callFunction = "save";
+            var callArgs = JSON.stringify([$("#fromEmal").val(), $("#toEmail").val(), $("#toName").val(), $("#content").val(), $("#sendTime").val()]);
+            
+            serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
+                listener: cbPush        //设置listener, 处理交易返回信息
+            });
+
+            intervalQuery = setInterval(function () {
+                funcIntervalQuery();
+            }, 5000);
+        }
+        function funcIntervalQuery() {
+            nebPay.queryPayInfo(serialNumber)   //search transaction result from server (result upload to server by app)
+                .then(function (resp) {
+                    console.log("tx result: " + resp)   //resp is a JSON string
+                    var respObject = JSON.parse(resp)
+                    if(respObject.code === 0){
+                        clearInterval(intervalQuery)
+                    }
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+        }
+
+        function cbPush(resp) {
+            console.log("response of push: " + JSON.stringify(resp))
+        }
+
+        function getAll() {
+            var from = Account.NewAccount().getAddressString();
+            var value = "0";
+            var nonce = "0"
+            var gas_price = "1000000"
+            var gas_limit = "2000000"
+            var callFunction = "getAll";
+            var callArgs = JSON.stringify([]); //in the form of ["args"]
+            var contract = {
+                "function": callFunction,
+                "args": callArgs
+            }
+
+            neb.api.call(from,dappAddress,value,nonce,gas_price,gas_limit,contract).then(function (resp) {
+                cbSearch(resp)
+            }).catch(function (err) {
+                //cbSearch(err)
+                console.log("error:" + err.message);
+            });
+        }
+        function cbSearch(resp) {
+            var result = resp.result    ////resp is an object, resp.result is a JSON string
+            console.log("return of rpc call: " + JSON.stringify(result));
+        }
+    </script>
+</body>
+</html>
