@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+<body>
+
+        <div style="height: 100px; padding: 10px;box-shadow: 0px 2px 5px #888888;">
+            <div class="container"><a href="index.html" class="navbar-brand" title="星云生日祝福"><img src="img/logo.png"/></a></div>
+        </div>
+        <div class="container" style="padding-top: 50px;">
+            <div style="width: 70%; float: left; padding-right: 20px;">
+                <div class="row" style="padding-top: 10px;">
+                    <div class="col-md-2" style="text-align: right;">收卡人:</div>
+                    <div class="col-md-4"><input type="text" class="form-control" id="toName" placeholder=""></div>
+                    <div class="col-md-2" style="text-align: right;">收卡人邮箱:</div>
+                    <div class="col-md-4"><input type="email" class="form-control" id="toEmail" placeholder=""></div> 
+                </div>
+
+                <div class="row" style="padding-top: 10px;">
+                    <div class="col-md-2" style="text-align: right;">生日日期:</div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" readonly id="birthday" placeholder="">
+                    </div>
+                    <div class="col-md-2" style="text-align: right;">赠送日期:</div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" readonly id="sendTime" placeholder="">
+                    </div>
+                </div>
+
+                <div class="row" style="padding-top: 10px;">
+                    <div class="col-md-2" style="text-align: right;">祝福:</div>
+                    <div class="col-md-10">
+                        <textarea class="form-control" rows="5" id="content" placeholder="内容" maxlength="200"></textarea>
+                    </div>
+                </div>
+                
+                <div class="row" style="padding-top: 10px;"> 
+                    <div class="col-md-2" style="text-align: right;">赠送人:</div>
+                    <div class="col-md-4"><input type="text" class="form-control" id="fromName" placeholder=""></div>
+                    <div class="col-md-2" style="text-align: right;">赠送人邮箱:</div>
+                    <div class="col-md-4"><input type="email" class="form-control" id="fromEmail" placeholder=""></div>
+                </div>
+            </div>
+            <div style="width: 30%; float: right;" >
+                <img src="img/timg.jpg" style="width: 100%; margin-bottom: 5px;" class="img-circle">
+                <button type="button" id="save" class="btn btn-block btn-success">发送祝福</button>
+            </div>
+        </div>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.min.js"></script>
+    <script src="js/nebPay.js"></script>
+    <script src="js/nebulas.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+
+        var dappAddress = "n1oBfuYL1tLYWxGaEXg7XH7Sjhg1RCLm3AA"; //testnet
+        // var dappAddress = "n1zL1KcxXaHw5i67nh5NbiizmJaovkgMCqz"; //main net
+
+        var nebulas = require("nebulas"),
+            Account = nebulas.Account,
+            neb = new nebulas.Neb();
+        neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+        // neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"));
+
+        var NebPay = require("nebpay");     //https://github.com/nebulasio/nebPay
+        var nebPay = new NebPay();
+        var serialNumber;
+        var intervalQuery;
+
+        $("#sendTime").datetimepicker({
+            format: 'yyyy-mm-dd hh:ii',
+        });
+
+        $("#birthday").datetimepicker({
+            format: 'yyyy-mm-dd',
+            minView:'month',
+        });
+
+        $("#save").click(function(){
+            save();
+        });
+
+        $("#getAll").click(function() {
+            getAll();
+        });
+    </script>
+</body>
+</html>
