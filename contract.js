@@ -4,9 +4,11 @@ var Card = function() {
     this.id = -1;
     this.fromAddress = "";
     this.fromEmail = "";
+    this.fromName = "";
     this.toEmail = "";
     this.toName = "";
     this.content = "";
+    this.birthday = ""; // yyyy-mm-dd
     this.createTime = ""; // yyyy-mm-dd hh:mm:ss
     this.sendTime = "";  // yyyy-mm-dd hh:mm
 };
@@ -38,15 +40,17 @@ HappyBirthday.prototype = {
 
     pad2: function(n) { return n < 10 ? '0' + n : n },
 
-    save: function(fromEmail, toEmail, toName, content, sendTime) {
+    save: function(fromEmail, fromName, toEmail, toName, content, birthday, sendTime) {
         var card = new Card();
         var from = Blockchain.transaction.from;
         card.id = this.mapSize;
         card.fromAddress = from;
         card.fromEmail = fromEmail;
+        card.fromName = fromName;
         card.toEmail = toEmail;
         card.toName = toName;
         card.content = content;
+        card.birthday = birthday;
         card.sendTime = sendTime;
         var date = new Date();
         var createTime = date.getFullYear().toString() + '-' + this.pad2(date.getMonth() + 1) + '-' + this.pad2(date.getDate()) + ' ' + this.pad2(date.getHours()) + ':' + this.pad2(date.getMinutes()) + ':' + this.pad2(date.getSeconds());

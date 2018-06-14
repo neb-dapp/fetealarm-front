@@ -11,9 +11,11 @@
 <body>
     <div>
         <input type="text" id="fromEmail" placeholder="发送人邮箱">
+        <input type="text" id="fromName" placeholder="发送人称呼">
         <input type="text" id="toEmail" placeholder="接收人邮箱">
         <input type="text" id="toName" placeholder="接收人称呼">
         <textarea type="text" id="content" placeholder="内容"></textarea>
+        <input type="text" class="form_datatime" id="birthday" placeholder="生日日期">
         <input type="text" class="form_datatime" id="sendTime" placeholder="发送日期">
         <button type="button" id="save">save</button>
         <button type="button" id="getAll">getall</button>
@@ -25,7 +27,7 @@
     <script src="js/nebulas.js"></script>
     <script>
 
-        var dappAddress = "n1q6hRiw4YiHyMBP8JC3TRQGKiEn95T6kPU"; //testnet
+        var dappAddress = "n1oBfuYL1tLYWxGaEXg7XH7Sjhg1RCLm3AA"; //testnet
         // var dappAddress = "n1zL1KcxXaHw5i67nh5NbiizmJaovkgMCqz"; //main net
 
         var nebulas = require("nebulas"),
@@ -43,6 +45,11 @@
             format: 'yyyy-mm-dd hh:ii',
         });
 
+        $("#birthday").datetimepicker({
+            format: 'yyyy-mm-dd',
+            minView:'month',
+        });
+
         $("#save").click(function(){
             save();
         });
@@ -56,11 +63,13 @@
             var value = "0";
             var callFunction = "save";
             var fromEmail = $("#fromEmail").val();
+            var fromName = $("#fromName").val();
             var toEmail = $("#toEmail").val();
             var toName = $("#toName").val();
             var content = $("#content").val();
+            var birthday = $("#birthday").val();
             var sendTime = $("#sendTime").val();
-            var callArgs = JSON.stringify([fromEmail, toEmail, toName, content, sendTime]);
+            var callArgs = JSON.stringify([fromEmail, fromName, toEmail, toName, content, birthday, sendTime]);
             
             serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
                 listener: cbPush        //设置listener, 处理交易返回信息
