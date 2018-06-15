@@ -60,4 +60,44 @@ function getAll() {
 function cbSearch(resp) {
     var result = resp.result    ////resp is an object, resp.result is a JSON string
     console.log("return of rpc call: " + JSON.stringify(result));
+    if(result != null) {
+        if(result == "Error: the last page") {
+            offset = offset - limit;
+        } else if (result == "Error: the first page") {
+            offset = offset + limit;
+        } else {
+            result = JSON.parse(result);
+            $("#cardDisplay").empty();
+            for(var i=0; i<result.length; i++) {
+                var div = "<div class='col-md-6'> <div class='thumbnail' style='box-shadow:0 2px 20px #888888;border-radius:25px;'>";
+                div += "<div style='padding-left: 10px; padding-top: 15px;'><h3>To "+ result[i].toName +"</h3></div>";
+                div += "<div class='card'>"+ result[i].content +"</div>";
+                div += "<div style='text-align: right; padding-bottom: 15px; padding-right: 20px;'>";
+                div += "<h3>"+ result[i].fromName +"</h3>";
+                div += "</div> </div> </div>";
+                $("#cardDisplay").append(div);
+            }
+        }
+    }
+}
+
+function getPage() {
+    var from = Account.NewAccount().getAddressString();
+    var value = "0";
+    var nonce = "0"
+    var gas_price = "1000000"
+    var gas_limit = "2000000"
+    var callFunction = "getPage";
+    var callArgs = JSON.stringify([limit, offset]); //in the form of ["args"]
+    var contract = {
+        "function": callFunction,
+        "args": callArgs
+    }
+
+    neb.api.call(from,dappAddress,value,nonce,gas_price,gas_limit,contract).then(function (resp) {
+        cbSearch(resp)
+    }).catch(function (err) {
+        //cbSearch(err)
+        console.log("error:" + err.message);
+    });
 }

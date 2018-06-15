@@ -66,6 +66,27 @@ HappyBirthday.prototype = {
         }
         return result;
     },
+
+    // 倒叙分页遍历
+    getPage: function(limit, offset) {
+        var result = [];
+        limit = limit;
+        offset = offset;
+        if(offset > this.mapSize){
+            throw new Error("the last page");
+        }
+        if(offset < 0) {
+            throw new Error("the first page");
+        }
+        var number = offset+limit;
+        if(number > this.mapSize){
+            number = this.mapSize;
+        }
+        for(var i=offset;i<number;i++){
+            result.push(this.cardMap.get(this.mapSize - 1 - i));
+        }
+        return result;
+    }
 };
 
 module.exports = HappyBirthday;

@@ -8,49 +8,109 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Document</title>
 </head>
+<style type="text/css">
+    .card {
+        height: 180px; 
+        line-height: 30px; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+        white-space: normal; 
+        display:-webkit-box; 
+        -webkit-box-orient:vertical; 
+        -webkit-line-clamp:6;
+        word-break:break-all;
+        margin-left:10px;
+        margin-right: 10px;
+    };
+    #demo_121 .n-invalid {border: 1px solid #f00;}
+</style>
 <body>
 
-        <div style="height: 100px; padding: 10px;box-shadow: 0px 2px 5px #888888;">
-            <div class="container"><a href="index.html" class="navbar-brand" title="星云生日祝福"><img src="img/logo.png"/></a></div>
+        <div style="height: 100px; padding: 10px; box-shadow: 0px 2px 5px #888888;">
+            <div class="container"><a href="index.html" class="navbar-brand" title="星云生日祝福"><img src="img/logo.png"/></a> <img src="img/ballon.png" alt="" align='right'></div>
         </div>
-        <div class="container" style="padding-top: 50px;">
+        <div class="container" style="margin-top: 50px; margin-bottom: 30px;padding-top: 50px; padding-bottom: 50px; box-shadow:0 2px 20px #888888;border-radius:25px;">
+            <form id="demo_121" onsubmit="save()">
             <div style="width: 70%; float: left; padding-right: 20px;">
                 <div class="row" style="padding-top: 10px;">
                     <div class="col-md-2" style="text-align: right;">收卡人:</div>
-                    <div class="col-md-4"><input type="text" class="form-control" id="toName" placeholder=""></div>
+                    <div class="col-md-4"><input type="text" class="form-control" id="toName" placeholder="" maxlength="20" required></div>
                     <div class="col-md-2" style="text-align: right;">收卡人邮箱:</div>
-                    <div class="col-md-4"><input type="email" class="form-control" id="toEmail" placeholder=""></div> 
+                    <div class="col-md-4"><input type="email" class="form-control" id="toEmail" placeholder="" required></div> 
                 </div>
 
                 <div class="row" style="padding-top: 10px;">
                     <div class="col-md-2" style="text-align: right;">生日日期:</div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" readonly id="birthday" placeholder="">
+                        <input type="text" class="form-control readonly" id="birthday" placeholder="" required>
                     </div>
                     <div class="col-md-2" style="text-align: right;">赠送日期:</div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" readonly id="sendTime" placeholder="">
+                        <input type="text" class="form-control" id="sendTime" placeholder="" required>
                     </div>
                 </div>
 
                 <div class="row" style="padding-top: 10px;">
                     <div class="col-md-2" style="text-align: right;">祝福:</div>
                     <div class="col-md-10">
-                        <textarea class="form-control" rows="5" id="content" placeholder="内容" maxlength="200"></textarea>
+                        <textarea class="form-control" rows="5" id="content" placeholder="" maxlength="200" required></textarea>
                     </div>
                 </div>
                 
                 <div class="row" style="padding-top: 10px;"> 
                     <div class="col-md-2" style="text-align: right;">赠送人:</div>
-                    <div class="col-md-4"><input type="text" class="form-control" id="fromName" placeholder=""></div>
+                    <div class="col-md-4"><input type="text" class="form-control" id="fromName" placeholder="" maxlength="20" required></div>
                     <div class="col-md-2" style="text-align: right;">赠送人邮箱:</div>
-                    <div class="col-md-4"><input type="email" class="form-control" id="fromEmail" placeholder=""></div>
+                    <div class="col-md-4"><input type="email" class="form-control" id="fromEmail" placeholder="" required></div>
                 </div>
             </div>
             <div style="width: 30%; float: right;" >
-                <img src="img/timg.jpg" style="width: 100%; margin-bottom: 5px;" class="img-circle">
-                <button type="button" id="save" class="btn btn-block btn-success">发送祝福</button>
+                <img src="img/timg.jpg" style="width: 100%; margin-bottom: 10px;" class="img-circle">
+                <button type="submit"  class="btn btn-block btn-success">发送祝福</button>
             </div>
+            </form>
+        </div>
+        
+        <div style='background-color: aquamarine; padding-top: 30px; margin-bottom: 20px; height: 200px;;'>
+            <div class='container'>
+                <div class="col-md-4" align="center">
+                    <img src="img/cake.png" alt="">
+                    <h3>记生日</h3>
+                </div>
+                <div class="col-md-4"  align="center">
+                    <img src="img/letter.png" alt="">
+                    <h3>寄贺卡</h3>
+                </div>
+                <div class="col-md-4"  align="center">
+                    <img src="img/gift.png" alt="">
+                    <h3>送祝福</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" id="cardDisplay" style="padding-top: 20px;">
+            <!-- <div class="col-md-6">
+                <div class="thumbnail" style='box-shadow:0 2px 20px #888888;border-radius:25px;'>
+                    <div style='padding-left: 10px; padding-top: 15px;'>
+                        <h3>To XXXX</h3>
+                    </div>
+                    <div class="card">
+                        一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
+                    </div>
+                    <div style="text-align: right; padding-bottom: 15px; padding-right: 20px;">
+                        <h3>AAAAA </h3>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <nav style="padding-bottom: 50px;">
+            <ul class="pager">
+                <li><a href="#" id="previousPage">Previous</a></li>
+                <li><a href="#" id="nextPage">Next</a></li>
+            </ul>
+        </nav>
+        <div class="container" style="height: 200px;">
+
         </div>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -60,7 +120,7 @@
     <script src="js/main.js"></script>
     <script>
 
-        var dappAddress = "n1oBfuYL1tLYWxGaEXg7XH7Sjhg1RCLm3AA"; //testnet
+        var dappAddress = "n1xPmwX6yu3FQNX3ywstSEic8EiJC1BWwbc"; //testnet
         // var dappAddress = "n1zL1KcxXaHw5i67nh5NbiizmJaovkgMCqz"; //main net
 
         var nebulas = require("nebulas"),
@@ -74,8 +134,29 @@
         var serialNumber;
         var intervalQuery;
 
+        var limit = 4;
+        var offset = 0;
+
+        getPage();
+        $(".readonly").on('keydown paste', function(e){
+            e.preventDefault();
+        });
+
+        $("#previousPage").click(function(){
+            offset = offset - limit;
+            getPage();
+        });
+
+        $("#nextPage").click(function(){
+            offset = offset + limit;
+            getPage();
+        });
+
         $("#sendTime").datetimepicker({
             format: 'yyyy-mm-dd hh:ii',
+            autoclose : true,  
+            todayHighlight : true,  
+            startDate : new Date()  
         });
 
         $("#birthday").datetimepicker({
