@@ -79,18 +79,18 @@
                 </div>
                 <div class="col-md-4"  align="center">
                     <img src="img/letter.png" alt="">
-                    <h3>寄贺卡</h3>
+                    <h3>送贺卡</h3>
                 </div>
                 <div class="col-md-4"  align="center">
                     <img src="img/gift.png" alt="">
-                    <h3>送祝福</h3>
+                    <h3>传祝福</h3>
                 </div>
             </div>
         </div>
 
         <div class="container" id="cardDisplay" style="padding-top: 20px;">
             <!-- <div class="col-md-6">
-                <div class="thumbnail" style='box-shadow:0 2px 20px #888888;border-radius:25px;'>
+                <div class="thumbnail" style='box-shadow:0 2px 20px #888888;border-radius:25px; background:url(img/card.jpg);background-size:contain;'>
                     <div style='padding-left: 10px; padding-top: 15px;'>
                         <h3>To XXXX</h3>
                     </div>
@@ -137,7 +137,8 @@
         var limit = 4;
         var offset = 0;
 
-        getPage();
+        // getPage();
+
         $(".readonly").on('keydown paste', function(e){
             e.preventDefault();
         });
