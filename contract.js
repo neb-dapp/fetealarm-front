@@ -1,3 +1,7 @@
+
+// TX Hash	adfd2e174946625ae0b2cbd762c6ec79442c4ae3638ada7494bc73de276f552e
+// Contract address	n1hEZvcNh4gGqwj4aWm1wSuraqabT6RkfCM
+
 "use strict";
 
 var Card = function() {
@@ -74,7 +78,7 @@ HappyBirthday.prototype = {
         var result = [];
         limit = limit;
         offset = offset;
-        if(offset > this.mapSize){
+        if(offset >= this.mapSize){
             throw new Error("the last page");
         }
         if(offset < 0) {

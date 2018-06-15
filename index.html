@@ -148,14 +148,14 @@
     <script src="js/main.js"></script>
     <script>
 
-        var dappAddress = "n1fKPgjvRkUKGGMFvW2QQ5akf8vEoowhnn8"; //testnet
-        // var dappAddress = "n1zL1KcxXaHw5i67nh5NbiizmJaovkgMCqz"; //main net
+        // var dappAddress = "n1fKPgjvRkUKGGMFvW2QQ5akf8vEoowhnn8"; //testnet
+        var dappAddress = "n1hEZvcNh4gGqwj4aWm1wSuraqabT6RkfCM"; //main net
 
         var nebulas = require("nebulas"),
             Account = nebulas.Account,
             neb = new nebulas.Neb();
-        neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
-        // neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"));
+        // neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+        neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"));
 
         var NebPay = require("nebpay");     //https://github.com/nebulasio/nebPay
         var nebPay = new NebPay();
