@@ -1,3 +1,17 @@
+function randomNum(minNum,maxNum){
+    switch(arguments.length){
+        case 1:
+            return parseInt(Math.random()*minNum+1);
+            break;
+        case 2:
+            return parseInt(Math.random()*(maxNum-minNum+1)+minNum);
+            break;
+        default:
+            return 0;
+            break;
+    }
+}
+
 function save() {
     var to = dappAddress;
     var value = "0";
@@ -9,7 +23,11 @@ function save() {
     var content = $("#content").val();
     var birthday = $("#birthday").val();
     var sendTime = $("#sendTime").val();
-    var callArgs = JSON.stringify([fromEmail, fromName, toEmail, toName, content, birthday, sendTime]);
+    var kind = $('input:radio:checked').val();
+    if(kind == -1) {
+        kind = randomNum(0, 4);
+    }
+    var callArgs = JSON.stringify([fromEmail, fromName, toEmail, toName, content, birthday, sendTime, kind]);
     
     serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
         listener: cbPush        //设置listener, 处理交易返回信息
@@ -69,7 +87,7 @@ function cbSearch(resp) {
             result = JSON.parse(result);
             $("#cardDisplay").empty();
             for(var i=0; i<result.length; i++) {
-                var div = "<div class='col-md-6'> <div class='thumbnail' style='box-shadow:0 2px 20px #888888;border-radius:25px;'>";
+                var div = "<div class='col-md-6'> <div class='thumbnail' style='box-shadow:0 2px 20px #888888;border-radius:25px;background:url(img/card"+ result[i].kind +".jpg);background-size:contain;'>";
                 div += "<div style='padding-left: 10px; padding-top: 15px;'><h3>To "+ result[i].toName +"</h3></div>";
                 div += "<div class='card'>"+ result[i].content +"</div>";
                 div += "<div style='text-align: right; padding-bottom: 15px; padding-right: 20px;'>";
